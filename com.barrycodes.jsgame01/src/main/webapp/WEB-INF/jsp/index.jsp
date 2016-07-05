@@ -3,8 +3,8 @@
 
 <div class="container">
     <div class="jumbotron">
-        <h2>YO THERE</h2>
-        <p></p>
+        <%@include file="game.jsp"%>
+        ${gameUser.username}
     </div>
 </div>
 

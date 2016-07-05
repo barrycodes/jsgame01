@@ -1,5 +1,7 @@
 package jsgame01.bootstrap;
 
+import jsgame01.common.LogHelper;
+import jsgame01.common.PasswordStorage;
 import jsgame01.domain.GameInstance;
 import jsgame01.domain.GameUser;
 import jsgame01.domain.GameUserRole;
@@ -40,8 +42,14 @@ public class SeedData implements ApplicationListener<ContextRefreshedEvent> {
         roleService.saveRole(role1);
         roleService.saveRole(role2);
 
-        GameUser user1 = new GameUser("Barry");
-        GameUser user2 = new GameUser("Buzz");
+        GameUser user1 = null;
+        GameUser user2 = null;
+        try {
+            user1 = new GameUser("Barry", PasswordStorage.createHash("pass123"));
+            user2 = new GameUser("Buzz", PasswordStorage.createHash("pass123"));
+        } catch (Exception ex) {
+            LogHelper.getLogger().error(ex);
+        }
 
         user1.getRoles().add(role1);
         user1.getRoles().add(role2);

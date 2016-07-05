@@ -1,8 +1,12 @@
 package jsgame01.domain;
 
+import org.hibernate.id.GUIDGenerator;
+import org.hibernate.id.UUIDGenerator;
+
 import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 /**
  * Created by barrsmit1 on 7/5/2016.
@@ -19,16 +23,26 @@ public class GameUser {
 
     private String username;
 
+    private String password;
+
+    private String userGuid;
+
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<GameUserRole> roles;
 
     public GameUser() {
         roles = new ArrayList<>();
+        userGuid = UUID.randomUUID().toString();
     }
 
     public GameUser(String username) {
+        this(username, null);
+    }
+
+    public GameUser(String username, String password) {
         this();
         this.username = username;
+        this.password = password;
     }
 
     public Integer getId() {
@@ -61,5 +75,21 @@ public class GameUser {
 
     public void setRoles(List<GameUserRole> roles) {
         this.roles = roles;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public String getUserGuid() {
+        return userGuid;
+    }
+
+    public void setUserGuid(String userGuid) {
+        this.userGuid = userGuid;
     }
 }

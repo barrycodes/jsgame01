@@ -23,6 +23,16 @@ public class GameUserServiceImpl implements GameUserService {
     }
 
     @Override
+    public GameUser getUserByName(String username) {
+        return repo.findByUsername(username);
+    }
+
+    @Override
+    public GameUser getUserByGuid(String guid) {
+        return repo.findByUserGuid(guid);
+    }
+
+    @Override
     public Iterable<GameUser> getAllUsers() {
         return repo.findAll();
     }

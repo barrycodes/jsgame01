@@ -11,6 +11,10 @@ public interface GameUserService {
 
     public GameUser getUserById(int id);
 
+    public GameUser getUserByName(String username);
+
+    public GameUser getUserByGuid(String guid);
+
     public Iterable<GameUser> getAllUsers();
 
     public void saveUser(GameUser u);

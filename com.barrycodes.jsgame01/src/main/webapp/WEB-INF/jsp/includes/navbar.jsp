@@ -13,15 +13,10 @@
         <div class="collapse navbar-collapse" id="navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <%--PAGE LINKS--%>
-                <li><a href="/employee">Employee</a></li>
-                <li><a href="/project">Project</a></li>
-                <li><a href="/contact">Contact</a></li>
+                <li><a href="/about">About</a></li>
                 <li><a href="/admin">Admin</a></li>
             </ul>
-            <ul class="nav navbar-nav navbar-right">
-                <%--LOGIN LINK--%>
-                <li><a href="/logout">Logout</a></li>
-            </ul>
+            <%@include file="user.jsp"%>
         </div>
     </div>
 </nav>
