@@ -29,7 +29,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
     public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
 
         switch (authenticationMethod) {
-            case "NONE": break;
+            case "NONE":
+                break;
             case "IN_MEMORY":
                 auth.inMemoryAuthentication().withUser("user").password("123").roles("USER");
                 auth.inMemoryAuthentication().withUser("admin").password("123").roles("ADMIN");
@@ -37,6 +38,8 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 break;
             case "LDAP":
                 auth.authenticationProvider(activeDirectoryLdapAuthenticationProvider());
+                break;
+            case "DATABASE":
                 break;
         }
     }
@@ -104,12 +107,12 @@ public class SecurityConfiguration extends WebSecurityConfigurerAdapter {
                 break;
             case "LDAP":
                 httpSecurity
-                        .authorizeRequests().antMatchers("/static/**").permitAll()
-                        .and()
-                        .authorizeRequests().antMatchers("/login/**").permitAll()
-                        .and()
                         .authorizeRequests().antMatchers("/").permitAll().anyRequest().authenticated()
                         .and()
+                        .authorizeRequests().antMatchers("/**").permitAll().anyRequest().authenticated()
+                        .and()
+//                        .authorizeRequests().antMatchers("/").permitAll().anyRequest().authenticated()
+//                        .and()
                         .formLogin()
                         .and()
                         .logout()

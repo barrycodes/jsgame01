@@ -2,6 +2,7 @@ package jsgame01.domain;
 
 import javax.persistence.*;
 import java.util.Date;
+import java.util.List;
 
 /**
 * Created by barrsmit1 on 7/5/2016.
@@ -20,9 +21,13 @@ public class GameInstance {
 
     private Integer score;
 
+    @ManyToOne(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
+    private GameUser user;
+
     public GameInstance() { }
 
-    public GameInstance(Date date, Integer score) {
+    public GameInstance(GameUser user, Date date, Integer score) {
+        this.user = user;
         this.date = date;
         this.score = score;
     }
@@ -57,5 +62,13 @@ public class GameInstance {
 
     public void setScore(Integer score) {
         this.score = score;
+    }
+
+    public GameUser getUser() {
+        return user;
+    }
+
+    public void setUser(GameUser user) {
+        this.user = user;
     }
 }

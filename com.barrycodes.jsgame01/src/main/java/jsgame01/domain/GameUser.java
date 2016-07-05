@@ -22,12 +22,8 @@ public class GameUser {
     @ManyToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
     private List<GameUserRole> roles;
 
-    @OneToMany(cascade = CascadeType.MERGE, fetch = FetchType.EAGER)
-    private List<GameInstance> games;
-
     public GameUser() {
         roles = new ArrayList<>();
-        games = new ArrayList<>();
     }
 
     public GameUser(String username) {
@@ -65,13 +61,5 @@ public class GameUser {
 
     public void setRoles(List<GameUserRole> roles) {
         this.roles = roles;
-    }
-
-    public List<GameInstance> getGames() {
-        return games;
-    }
-
-    public void setGames(List<GameInstance> games) {
-        this.games = games;
     }
 }

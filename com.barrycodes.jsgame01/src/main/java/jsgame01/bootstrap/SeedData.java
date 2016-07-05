@@ -34,18 +34,6 @@ public class SeedData implements ApplicationListener<ContextRefreshedEvent> {
     }
 
     private void seedData() {
-        GameInstance game1 = new GameInstance(new Date(), 1000);
-        GameInstance game2 = new GameInstance(new Date(), 5000);
-        GameInstance game3 = new GameInstance(new Date(), 10000);
-        GameInstance game4 = new GameInstance(new Date(), 2000);
-        GameInstance game5 = new GameInstance(new Date(), 2000);
-
-        gameService.saveGameInstance(game1);
-        gameService.saveGameInstance(game2);
-        gameService.saveGameInstance(game3);
-        gameService.saveGameInstance(game4);
-        gameService.saveGameInstance(game5);
-
         GameUserRole role1 = new GameUserRole("admin");
         GameUserRole role2 = new GameUserRole("player");
 
@@ -60,14 +48,20 @@ public class SeedData implements ApplicationListener<ContextRefreshedEvent> {
 
         user2.getRoles().add(role2);
 
-        user1.getGames().add(game1);
-        user1.getGames().add(game2);
-        user1.getGames().add(game3);
-        user1.getGames().add(game4);
-
-        user2.getGames().add(game5);
-
         userService.saveUser(user1);
         userService.saveUser(user2);
+
+        GameInstance game1 = new GameInstance(user1, new Date(), 1000);
+        GameInstance game2 = new GameInstance(user1, new Date(), 5000);
+        GameInstance game3 = new GameInstance(user1, new Date(), 10000);
+        GameInstance game4 = new GameInstance(user1, new Date(), 2000);
+        GameInstance game5 = new GameInstance(user2, new Date(), 2000);
+
+        gameService.saveGameInstance(game1);
+        gameService.saveGameInstance(game2);
+        gameService.saveGameInstance(game3);
+        gameService.saveGameInstance(game4);
+        gameService.saveGameInstance(game5);
+
     }
 }
