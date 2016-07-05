@@ -4,12 +4,14 @@ import jsgame01.domain.GameUserRole;
 import jsgame01.repositories.GameUserRoleRepository;
 import jsgame01.services.GameUserRoleService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by barrsmit1 on 7/5/2016.
  */
+@Service
 public class GameUserRoleServiceImpl implements GameUserRoleService {
 
     @Autowired

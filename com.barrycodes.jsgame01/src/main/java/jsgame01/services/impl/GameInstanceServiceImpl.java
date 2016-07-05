@@ -4,12 +4,14 @@ import jsgame01.domain.GameInstance;
 import jsgame01.repositories.GameInstanceRepository;
 import jsgame01.services.GameInstanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
- * Created by barrsmit1 on 7/5/2016.
- */
+* Created by barrsmit1 on 7/5/2016.
+*/
+@Service
 public class GameInstanceServiceImpl implements GameInstanceService {
 
     @Autowired

@@ -4,8 +4,8 @@ import javax.persistence.*;
 import java.util.Date;
 
 /**
- * Created by barrsmit1 on 7/5/2016.
- */
+* Created by barrsmit1 on 7/5/2016.
+*/
 @Entity
 public class GameInstance {
 

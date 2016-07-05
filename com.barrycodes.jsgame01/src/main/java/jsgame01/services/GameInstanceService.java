@@ -5,8 +5,8 @@ import jsgame01.domain.GameInstance;
 import java.util.List;
 
 /**
- * Created by barrsmit1 on 7/5/2016.
- */
+* Created by barrsmit1 on 7/5/2016.
+*/
 public interface GameInstanceService {
 
     public GameInstance getGameInstanceById(int id);

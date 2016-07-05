@@ -40,8 +40,17 @@ public class SeedData implements ApplicationListener<ContextRefreshedEvent> {
         GameInstance game4 = new GameInstance(new Date(), 2000);
         GameInstance game5 = new GameInstance(new Date(), 2000);
 
+        gameService.saveGameInstance(game1);
+        gameService.saveGameInstance(game2);
+        gameService.saveGameInstance(game3);
+        gameService.saveGameInstance(game4);
+        gameService.saveGameInstance(game5);
+
         GameUserRole role1 = new GameUserRole("admin");
         GameUserRole role2 = new GameUserRole("player");
+
+        roleService.saveRole(role1);
+        roleService.saveRole(role2);
 
         GameUser user1 = new GameUser("Barry");
         GameUser user2 = new GameUser("Buzz");
