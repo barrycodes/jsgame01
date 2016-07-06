@@ -28,8 +28,12 @@
     <script src="${common}"></script>
 
     <%--CUSTOM CSS--%>
-    <c:url value="/static/css/jsgame01.css" var="bootstrapCUSTOM" />
+    <c:url value="/static/css/common.css" var="bootstrapCUSTOM" />
     <link href="${bootstrapCUSTOM}" rel="stylesheet" media="screen" />
+
+    <%--CUSTOM CSS--%>
+    <c:url value="/static/css/jsgame01.css" var="jsgameCss" />
+    <link href="${jsgameCss}" rel="stylesheet" media="screen" />
 
     <%--<link href="http://vjs.zencdn.net/5.10.4/video-js.css" rel="stylesheet">--%>
 
