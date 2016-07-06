@@ -18,8 +18,8 @@
     <div class="row">
         <div class="col-sm-12">
             <div class="jumbotron">
-                <div id="slider">
-                    YO THERE
+                <div id="jsgame">
+
                 </div>
             </div>
         </div>
