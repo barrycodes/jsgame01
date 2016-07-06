@@ -11,7 +11,7 @@
                 <label for="inputUsername" class="col-sm-2 control-label">Username</label>
                 <div class="col-sm-3">
                     <form:input cssClass="form-control" path="username" id="inputUsername" type="text" placeholder="username"></form:input>
-                </div>
+                </div><span class="glyphicon glyphicon-ok"></span>
             </div>
             <div class="form-group">
                 <label for="inputPassword" class="col-sm-2 control-label">Password</label>
