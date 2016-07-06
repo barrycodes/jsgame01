@@ -1,18 +1,24 @@
 package jsgame01.controllers;
 
+import com.google.gson.Gson;
+import jsgame01.common.LogHelper;
 import jsgame01.common.PasswordStorage;
 import jsgame01.domain.GameUser;
 import jsgame01.domain.vo.GameUserVo;
+import jsgame01.services.GameUserRoleService;
 import jsgame01.services.GameUserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * Created by barrsmit1 on 7/5/2016.
@@ -22,6 +28,9 @@ public class IndexController {
 
     @Autowired
     private GameUserService userService;
+
+    @Autowired
+    private GameUserRoleService roleService;
 
     @RequestMapping(value = "/")
     public String index() {
@@ -44,6 +53,18 @@ public class IndexController {
         model.addAttribute("gameUserVo", new GameUserVo());
 
         return "login";
+    }
+
+    @RequestMapping(value = "/checkusername", method = RequestMethod.GET)
+    public void checkUsername(@RequestParam String username, HttpServletResponse response) {
+        GameUser user = userService.getUserByName(username);
+        Boolean result = (user == null);
+
+        try {
+            response.getWriter().write(new Gson().toJson(result));
+        } catch (IOException ex) {
+            LogHelper.getLogger().error(ex);
+        }
     }
 
     @RequestMapping(value = "/logout")
@@ -72,6 +93,14 @@ public class IndexController {
                         modelObject = foundUser;
                     }
                 }
+            }
+            else {
+                foundUser = new GameUser(gameUserVo.getUsername(), PasswordStorage.createHash(gameUserVo.getPassword()));
+                foundUser.getRoles().add(roleService.getRoleByName("player"));
+                userService.saveUser(foundUser);
+                setLoggedInCookie(foundUser, session);
+                result = "redirect:/";
+                modelObject = foundUser;
             }
         }
         model.addAttribute("gameUserVo", modelObject);

@@ -10,3 +10,36 @@ div.footer footer {
     margin-top: 0.8em;
     color: black;
 }
+
+.usernameCheck {
+    font-size: 1.3em;
+    margin-top: 0.45em;
+}
+
+.usernameGood {
+    color: green;
+    display: none;
+    vertical-align: middle;
+}
+
+.usernameBad {
+    color: red;
+    display: none;
+    vertical-align: middle;
+}
+
+.passwordGood {
+    color: green;
+    display: none;
+    vertical-align: middle;
+}
+
+.passwordBad {
+    color: red;
+    display: none;
+    vertical-align: middle;
+}
+
+.loginSubmit {
+
+}

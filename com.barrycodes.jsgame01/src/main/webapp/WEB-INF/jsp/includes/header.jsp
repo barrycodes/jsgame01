@@ -12,28 +12,33 @@
     <c:url value="/webjars/jquery/2.1.3/jquery.min.js" var="jquery" />
     <script src="${jquery}"></script>
 
-    <%--BOOTSTRAP--%>
-    <c:url value="/webjars/bootstrap/3.3.4/js/bootstrap.min.js" var="bootstrapJS" />
-    <script src="${bootstrapJS}"></script>
     <%--<c:url value="/webjars/bootstrap/3.3.4/css/bootstrap.min.css" var="bootstrapCSS" />--%>
     <%--<link href="${bootstrapCSS}" rel="stylesheet" media="screen" />--%>
     <%--BOOTSWATCH PAPER--%>
     <%--<c:url value="/static/css/bootswatch_paper.css" var="bootstrapCSS" />--%>
     <%--<link href="${bootstrapCSS}" rel="stylesheet" media="screen" />--%>
+    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" rel="stylesheet" />
+
     <c:url value="/static/css/bootswatch_slate.css" var="bootstrapCSS" />
     <link href="${bootstrapCSS}" rel="stylesheet" media="screen" />
+
+    <%--BOOTSTRAP--%>
+    <c:url value="/webjars/bootstrap/3.3.4/js/bootstrap.min.js" var="bootstrapJS" />
+    <script src="${bootstrapJS}"></script>
 
     <%--CUSTOM JS--%>
     <c:url value="/static/js/common.js" var="common" />
     <script src="${common}"></script>
 
     <%--CUSTOM CSS--%>
-    <c:url value="/static/css/common.css" var="bootstrapCUSTOM" />
-    <link href="${bootstrapCUSTOM}" rel="stylesheet" media="screen" />
-
-    <%--CUSTOM CSS--%>
     <c:url value="/static/css/jsgame01.css" var="jsgameCss" />
     <link href="${jsgameCss}" rel="stylesheet" media="screen" />
+
+    <%--CUSTOM CSS--%>
+    <c:url value="/static/css/game.css" var="gameCss" />
+    <link href="${gameCss}" rel="stylesheet" media="screen" />
+
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
 
     <%--<link href="http://vjs.zencdn.net/5.10.4/video-js.css" rel="stylesheet">--%>
 
@@ -42,7 +47,7 @@
 
     <%--<script src="http://vjs.zencdn.net/5.10.4/video.js"></script>--%>
 
-    <title>Aston Technologies HR Application</title>
+    <title>Breakout!</title>
 
 </head>
 <body>

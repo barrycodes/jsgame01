@@ -11,6 +11,8 @@ public interface GameUserRoleService {
 
     public GameUserRole getRoleById(int id);
 
+    public GameUserRole getRoleByName(String name);
+
     public Iterable<GameUserRole> getAllRoles();
 
     public void saveRole(GameUserRole r);

@@ -38,6 +38,11 @@ public class GameUserRoleServiceImpl implements GameUserRoleService {
     }
 
     @Override
+    public GameUserRole getRoleByName(String name) {
+        return repo.findByName(name);
+    }
+
+    @Override
     public void deleteAllRoles() {
         repo.deleteAll();
     }
