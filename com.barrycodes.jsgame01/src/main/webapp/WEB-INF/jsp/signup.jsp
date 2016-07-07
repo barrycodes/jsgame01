@@ -55,10 +55,10 @@
 
 <div class="wrapper container">
     <div id="main-wrapper" class="col-sm-12">
-        <form:form modelAttribute="gameUserVo" cssClass="form-horizontal" action="/login" method="post">
+        <form:form modelAttribute="gameUserVo" cssClass="form-horizontal" action="/signup" method="post">
             <form:hidden path="id"></form:hidden>
             <form:hidden path="version"></form:hidden>
-            <legend>Login or Sign Up</legend>
+            <legend>Sign Up</legend>
             <div class="form-group">
                 <label for="inputUsername" class="col-sm-2 control-label">Username</label>
                 <div class="col-sm-3">

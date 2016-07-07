@@ -55,6 +55,14 @@ public class IndexController {
         return "login";
     }
 
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String signupGet(Model model) {
+
+        model.addAttribute("gameUserVo", new GameUserVo());
+
+        return "signup";
+    }
+
     @RequestMapping(value = "/checkusername", method = RequestMethod.GET)
     public void checkUsername(@RequestParam String username, HttpServletResponse response) {
         GameUser user = userService.getUserByName(username);
@@ -94,7 +102,25 @@ public class IndexController {
                     }
                 }
             }
-            else {
+        }
+        model.addAttribute("gameUserVo", modelObject);
+
+        return result;
+
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String signupPost(GameUserVo gameUserVo, Model model, HttpSession session) throws PasswordStorage.CannotPerformOperationException, PasswordStorage.InvalidHashException {
+
+        String result = "signup";
+
+        Object modelObject = null;
+
+        modelObject = gameUserVo;
+
+        if (gameUserVo != null) {
+            GameUser foundUser = userService.getUserByName(gameUserVo.getUsername());
+            if (foundUser == null) {
                 foundUser = new GameUser(gameUserVo.getUsername(), PasswordStorage.createHash(gameUserVo.getPassword()));
                 foundUser.getRoles().add(roleService.getRoleByName("player"));
                 userService.saveUser(foundUser);
@@ -106,7 +132,6 @@ public class IndexController {
         model.addAttribute("gameUserVo", modelObject);
 
         return result;
-
     }
 
     private void setLoggedInCookie(GameUser user, HttpSession session) {

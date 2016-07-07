@@ -35,3 +35,13 @@
 #go {
     visibility: hidden;
 }
+#ball {
+    background-color: #999;
+    position: relative;
+    left: 19em;
+    bottom:-20em;
+    width:2em;
+    height:2em;
+    border-radius: 1em;
+    display: none;
+}

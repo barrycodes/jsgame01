@@ -6,7 +6,8 @@
             <li><a href="/logout">Logout</a></li>
         </c:when>
         <c:otherwise>
-            <li><a href="/login">Login / Sign Up</a></li>
+            <li><a href="/signup">Sign Up</a></li>
+            <li><a href="/login">Login</a></li>
         </c:otherwise>
     </c:choose>
 </ul>

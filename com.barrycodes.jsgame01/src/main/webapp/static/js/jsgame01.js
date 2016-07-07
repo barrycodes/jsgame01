@@ -14,6 +14,11 @@ var frameDelay = 10;
 var sliderDistancePerFrame = 0.4;
 var readyDelay = 2000;
 var goDelay = 350;
+var ball;
+var ballDistancePerFrame = 0.1;
+var ballTimer;
+var ballX = 19;
+var ballY = -20;
 
 $(function() {
     initialize();
@@ -55,7 +60,8 @@ function setupHandlers() {
 
 function initialize() {
     game = $("#jsgame");
-    game.html("<div id='ready'>READY</div><div id='go'>GO!</div><div id='slider'></div>");
+    game.html("<div id='ready'>READY</div><div id='go'>GO!</div><div id='slider'></div><div id='ball'></div>");
+    ball = $("#ball");
     slider = $("#slider");
     readyAnimation();
 }
@@ -65,10 +71,31 @@ function readyAnimation() {
         $("#go").css('visibility', 'visible');
         setTimeout(function() {
             $("#go,#ready").remove();
+            ball.css("display", "block");
             active = true;
             setupHandlers();
+            startBallMoving();
         }, goDelay);
     });
+}
+
+function moveBall() {
+    if (ballY > -50) {
+        ballX += ballDistancePerFrame;
+        ballY -= ballDistancePerFrame;
+        ball.css("left", "" + ballX + "em");
+        ball.css("bottom", "" + ballY + "em");
+    }
+    else stopBallMoving();
+}
+
+function startBallMoving() {
+    stopBallMoving();
+    ballTimer = setInterval(moveBall, frameDelay);
+}
+
+function stopBallMoving() {
+    clearInterval(ballTimer);
 }
 
 function moveSliderLeft() {
