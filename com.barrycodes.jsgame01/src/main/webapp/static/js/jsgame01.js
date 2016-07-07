@@ -19,6 +19,10 @@ var ballDistancePerFrame = 0.1;
 var ballTimer;
 var ballX = 19;
 var ballY = -20;
+var ballAngle = 315;
+var ballDeltaX;
+var ballDeltaY;
+
 
 $(function() {
     initialize();
@@ -77,6 +81,48 @@ function readyAnimation() {
             startBallMoving();
         }, goDelay);
     });
+}
+
+function setBallDelta() {
+    var quadrant = -1;
+    if (ballAngle >= 0) {
+        if (ballAngle <= 90)
+            quadrant = 0;
+        else if (ballAngle <= 180)
+            quadrant = 1;
+        else if (ballAngle <= 270)
+            quadrant = 2;
+        else if (ballAngle <= 360)
+            quadrant = 3;
+    }
+    if (quadrant >= 0)
+        ballAngle -= (quadrant * 90);
+    if (ballAngle == 0) {
+        ballDeltaX = ballDistancePerFrame;
+        ballDeltaY = 0;
+    }
+    else if (ballAngle == 90) {
+        ballDeltaX = 0;
+        ballDeltaY = ballDistancePerFrame;
+    }
+    else {
+        // ... sin angle = opposite / hypotenuse
+        // ... cos angle = opposite
+    }
+    if (quadrant == 1) {
+        var temp = ballDeltaX;
+        ballDeltaX = -ballDeltaY;
+        ballDeltaY = temp;
+    }
+    else if (quadrant == 2) {
+        ballDeltaX = -ballDeltaX;
+        ballDeltaY = -ballDeltaY;
+    }
+    else if (quadrant == 3) {
+        var temp = ballDeltaX;
+        ballDeltaX = ballDeltaY;
+        ballDeltaY = -ballDeltaX;
+    }
 }
 
 function moveBall() {
