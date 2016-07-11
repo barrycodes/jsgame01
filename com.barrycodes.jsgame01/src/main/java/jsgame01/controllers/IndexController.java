@@ -3,11 +3,15 @@ package jsgame01.controllers;
 import com.google.gson.Gson;
 import jsgame01.common.LogHelper;
 import jsgame01.common.PasswordStorage;
+import jsgame01.domain.GameInstance;
 import jsgame01.domain.GameUser;
 import jsgame01.domain.vo.GameUserVo;
+import jsgame01.services.GameInstanceService;
 import jsgame01.services.GameUserRoleService;
 import jsgame01.services.GameUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -32,8 +36,18 @@ public class IndexController {
     @Autowired
     private GameUserRoleService roleService;
 
+    @Autowired
+    private GameInstanceService gameService;
+
     @RequestMapping(value = "/")
-    public String index() {
+    public String index(Model model) {
+
+        Iterable<GameInstance> games1 = gameService.getTop10Scores();
+        Iterable<GameInstance> games2 = gameService.getTop10ScoresToday();
+
+        model.addAttribute("top10Games", games1);
+        model.addAttribute("top10GamesToday", games2);
+
         return "index";
     }
 

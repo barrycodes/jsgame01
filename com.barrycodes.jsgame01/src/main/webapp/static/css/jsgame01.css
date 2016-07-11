@@ -43,3 +43,20 @@ div.footer footer {
 .loginSubmit {
 
 }
+
+.highscores, .table, .row {
+    /*text-align: center;*/
+}
+
+.highscores1 {
+    margin-top: 45em;
+}
+
+.highscores1, .highscores2 {
+    /*width: 40em;*/
+    /*text-align: center;*/
+}
+
+#highscores2 {
+
+}

@@ -70,6 +70,5 @@ public class SeedData implements ApplicationListener<ContextRefreshedEvent> {
         gameService.saveGameInstance(game3);
         gameService.saveGameInstance(game4);
         gameService.saveGameInstance(game5);
-
     }
 }
