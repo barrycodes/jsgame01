@@ -1,8 +1,14 @@
 <%@include file="includes/header.jsp" %>
 <%@include file="includes/navbar.jsp" %>
 
-<c:url value="/static/js/jsgame01.js" var="jsgameJs" />
-<script src="${jsgameJs}"></script>
+<c:url value="/static/js/game/settings.js" var="settingsJs" />
+<c:url value="/static/js/game/slider.js" var="sliderJs" />
+<c:url value="/static/js/game/ball.js" var="ballJs" />
+<c:url value="/static/js/game/game.js" var="gameJs" />
+<script src="${settingsJs}"></script>
+<script src="${sliderJs}"></script>
+<script src="${ballJs}"></script>
+<script src="${gameJs}"></script>
 
 <div class="container">
     <div class="row">
