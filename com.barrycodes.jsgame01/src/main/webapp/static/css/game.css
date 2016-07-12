@@ -18,8 +18,10 @@
     width: 15em;
     height: 1.7em;
     position: relative;
+    /*left: 20.6em;*/
     left: 20.6em;
-    bottom: -28em;
+    /*bottom: -28em;*/
+    top: 28em;
     border-radius: 0.8em;
 
     /*margin-top:10em;*/
@@ -38,8 +40,10 @@
 #ball {
     background-color: #999;
     position: relative;
-    left: 19em;
-    bottom:-20em;
+    /*left: 19em;*/
+    /*top: 20em;*/
+    left: 0em;
+    top: -1.6em;
     width:2em;
     height:2em;
     border-radius: 1em;

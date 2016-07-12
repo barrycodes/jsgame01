@@ -15,10 +15,13 @@ function initialize() {
 function setupHandlers() {
     $(document).keydown(function(event) {
         if (active) {
+            //console.log(event.which);
             switch (event.which) {
                 case keyEscape:
                     stopSlider();
+                    stopBallMoving();
                     active = false;
+                    break;
                 case keyLeft:
                     if (!movingLeft)
                         startMovingLeft();
@@ -51,6 +54,7 @@ function readyAnimation() {
         $("#go").css('visibility', 'visible');
         setTimeout(function() {
             $("#go,#ready").remove();
+            setBallPosition(ballX, ballY);
             ball.css("display", "block");
             active = true;
             setupHandlers();
