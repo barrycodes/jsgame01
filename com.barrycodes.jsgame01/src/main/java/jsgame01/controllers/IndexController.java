@@ -103,7 +103,7 @@ public class IndexController {
 
         Object modelObject = null;
 
-        modelObject = gameUserVo;
+        boolean success = false;
 
         if (gameUserVo != null) {
             GameUser foundUser = userService.getUserByName(gameUserVo.getUsername());
@@ -112,17 +112,20 @@ public class IndexController {
                 if (correctPassword != null) {
                     if (PasswordStorage.verifyPassword(gameUserVo.getPassword(), correctPassword)) {
                         setLoggedInCookie(foundUser, session);
+                        modelObject = gameUserVo;
                         result = "redirect:/";
-                        modelObject = foundUser;
+                        success = true;
                     }
                 }
             }
         }
-        if (modelObject != null)
+        if (success)
             model.addAttribute("gameUserVo", modelObject);
-        else
-            result = "redirect:/login";
-
+        else {
+            model.addAttribute("gameUserVo", new GameUserVo());
+            model.addAttribute("errorAlert", "error");
+            result = "login";
+        }
         return result;
 
     }

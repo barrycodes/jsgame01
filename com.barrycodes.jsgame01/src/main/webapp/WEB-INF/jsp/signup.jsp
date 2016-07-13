@@ -78,7 +78,7 @@
             <div class="form-group">
                 <div class="col-sm-4 col-sm-offset-2">
                     <form:button type="reset" value="cancel" class="btn btn-default">Cancel</form:button>
-                    <form:button type="submit" value="save" class="btn btn-primary loginSubmit" ng-enabled="">Save</form:button>
+                    <form:button type="submit" value="save" class="btn btn-primary loginSubmit" ng-enabled="">Submit</form:button>
                 </div>
             </div>
         </form:form>

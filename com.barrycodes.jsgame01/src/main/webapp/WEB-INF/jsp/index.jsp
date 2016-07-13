@@ -12,12 +12,15 @@
 <script src="${ballJs}"></script>
 <script src="${gameJs}"></script>
 
+<%--<scrip--%>
+
 <div class="container">
     <div class="row">
         <div class="col-lg-12">
             <%--<center>--%>
                 <div id="gamecontainer" class="jumbotron">
-                    <span id="lives">Lives: <span id="livesCount">AAAA</span></span>
+                    <div id="begin" class="btn btn-primary">Begin</div>
+                    <span id="lives">Lives: <span id="livesCount">3</span></span>
                     <span id="score">Score: <span id="scoreCount">0</span></span>
                     <div id="jsgame">
                         <div id='ready'>
@@ -37,10 +40,10 @@
             <%--</center>--%>
         </div>
     </div>
-    <div class="row">
-        <div class="col-md-6 highscores highscores1">
+    <div class="row highscores">
+        <div class="col-md-6">
             <h3>Hall of Fame</h3>
-            <table class="table table-striped col-md-6">
+            <table class="table table-striped">
                 <thead>
                     <tr>
                         <th>#</th>
@@ -63,11 +66,9 @@
                 </tbody>
             </table>
         </div>
-    </div>
-    <div class="row">
         <div class="col-md-6 highscores highscores2">
             <h3>Today's High Scores</h3>
-            <table class="table table-striped col-md-6">
+            <table class="table table-striped">
                 <thead>
                 <tr>
                     <th>#</th>

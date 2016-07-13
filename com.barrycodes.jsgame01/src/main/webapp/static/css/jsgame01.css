@@ -44,19 +44,15 @@ div.footer footer {
 
 }
 
-.highscores, .table, .row {
-    /*text-align: center;*/
+.highscores {
+    margin-top: 35em;
 }
 
-.highscores1 {
-    margin-top: 45em;
+#begin {
+    font-size: 0.8em;
+    display: inline;
+    text-align: center;
 }
-
-.highscores1, .highscores2 {
-    /*width: 40em;*/
-    /*text-align: center;*/
-}
-
-#highscores2 {
-
+.nav, .navbar-inverse {
+    /*font-size:3em;*/
 }

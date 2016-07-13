@@ -32,7 +32,7 @@ public class SeedData implements ApplicationListener<ContextRefreshedEvent> {
 
     @Override
     public void onApplicationEvent(ContextRefreshedEvent contextRefreshedEvent) {
-        seedData();
+//        seedData();
     }
 
     private void seedData() {

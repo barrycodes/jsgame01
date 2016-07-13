@@ -42,7 +42,7 @@ var ballInitialAngle = 285;
 var sliderInitialX = 0;
 
 var sliderDistancePerFrame = 8;
-var ballDistancePerFrame = 3;
+var ballDistancePerFrame = 3.7;
 
 var sliderX;
 var sliderY;
@@ -55,3 +55,4 @@ var maxSliderPosition;
 
 var lives = 3;
 var score = 0;
+var level = 1;

@@ -112,11 +112,20 @@ function checkCollisions() {
 function nextLevel() {
     stopBallMoving();
     $("#ball").css("visibility", "hidden");
-    ++ballDistancePerFrame;
-    sliderWidth -= 10;
+    ballDistancePerFrame += 0.7;
+    sliderDistancePerFrame += 0.7;
+    sliderWidth -= 15;
     slider.css("width", sliderWidth);
+    ++level;
     initializeBall();
-    resetAnimation(levelBlocks1);
+    var nextLevel = levelBlocks3;
+    switch (level) {
+        case 1: nextLevel = levelBlocks1; break;
+        case 2: nextLevel = levelBlocks2; break;
+        case 3: nextLevel = levelBlocks3; break;
+        default: nextLevel = levelBlocks3; break;
+    }
+    resetAnimation(nextLevel);
 }
 
 function checkBrickCollisions(ballRect) {
@@ -179,12 +188,13 @@ function checkBlockCollision(ballRect, blockRect, allowCornerAngle) {
         var angleOffset = 0;
         if (angle > 180 && angle < 360 && ballRect.bottom >= blockRect.top && ballRect.bottom < blockRect.bottom) {
             if (allowCornerAngle) {
+                var closeToCornerBoundary = sliderWidth * 0.4;
                 var closeToCorner = ballRect.right - blockRect.left;
-                if (closeToCorner < 60)
-                    angleOffset -= (60 - closeToCorner) * 0.5;
+                if (closeToCorner < closeToCornerBoundary)
+                    angleOffset -= (closeToCornerBoundary - closeToCorner) * 0.7;
                 closeToCorner = blockRect.right - ballRect.left;
-                if (closeToCorner < 60)
-                    angleOffset += (60 - closeToCorner) * 0.5;
+                if (closeToCorner < closeToCornerBoundary)
+                    angleOffset += (closeToCornerBoundary - closeToCorner) * 0.7;
             }
             rBottom = true;
             collision = true;
@@ -204,6 +214,42 @@ function checkBlockCollision(ballRect, blockRect, allowCornerAngle) {
         if (rTop && (rLeft || rRight))
             angleOffset = 0;
         ballAngle = angle + angleOffset;
+        if ((rTop || rBottom) && (rLeft || rRight)) {
+            var xDelta = 0;
+            var yDelta = 0;
+            if (rTop && rLeft) {
+                xDelta = ballRect.right - blockRect.left;
+                yDelta = ballRect.bottom - blockRect.top;
+                if (xDelta > yDelta)
+                    rLeft = false;
+                else
+                    rTop = false;
+            }
+            if (rBottom && rLeft) {
+                xDelta = ballRect.right - blockRect.left;
+                yDelta = blockRect.bottom - ballRect.top;
+                if (xDelta > yDelta)
+                    rLeft = false;
+                else
+                    rBottom = false;
+            }
+            if (rTop && rRight) {
+                xDelta = blockRect.right - ballRect.left;
+                yDelta = ballRect.bottom - blockRect.top;
+                if (xDelta > yDelta)
+                    rRight = false;
+                else
+                    rTop = false;
+            }
+            if (rBottom && rRight) {
+                xDelta = blockRect.right - ballRect.left;
+                yDelta = blockRect.bottom - ballRect.top;
+                if (xDelta > yDelta)
+                    rRight = false;
+                else
+                    rBottom = false;
+            }
+        }
         if (rLeft) ballRicochetLeft();
         if (rTop) ballRicochetTop();
         if (rRight) ballRicochetRight();

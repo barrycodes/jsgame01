@@ -1,7 +1,9 @@
 
 
 $(function() {
-    initialize();
+    $("#begin").click(function() {
+        initialize();
+    });
 });
 
 function initialize() {
@@ -115,12 +117,12 @@ function resetAnimation(level) {
 }
 
 function finishGame() {
-    alert("finish");
+//    alert("finish");
     $.ajax({
         url: "/storescore/" + score,
         method: "post",
     }).done(function() {
-        alert("done");
+//        alert("done");
         setTimeout(function() {
             location.reload();
         }, 5000);
