@@ -22,7 +22,7 @@
         $("#inputUsername").change(function() {
             var uName = $(this).val();
             var goodName = false;
-            console.log(uName);
+//            console.log(uName);
             if (uName.length >= 3) {
                 $.getJSON("/checkusername?username=" + uName, function(data){
                     if (data) {

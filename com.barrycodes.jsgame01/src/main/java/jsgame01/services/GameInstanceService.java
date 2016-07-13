@@ -21,6 +21,6 @@ public interface GameInstanceService {
 
     public Iterable<GameInstance> getTop10Scores();
 
-    public Iterable<GameInstance> getTop10ScoresToday();
+    public Iterable<GameInstance> getTopScoresToday();
 
 }

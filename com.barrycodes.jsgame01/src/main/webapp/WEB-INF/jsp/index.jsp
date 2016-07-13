@@ -2,10 +2,12 @@
 <%@include file="includes/navbar.jsp" %>
 
 <c:url value="/static/js/game/settings.js" var="settingsJs" />
+<c:url value="/static/js/game/blocks.js" var="blocksJs" />
 <c:url value="/static/js/game/slider.js" var="sliderJs" />
 <c:url value="/static/js/game/ball.js" var="ballJs" />
 <c:url value="/static/js/game/game.js" var="gameJs" />
 <script src="${settingsJs}"></script>
+<script src="${blocksJs}"></script>
 <script src="${sliderJs}"></script>
 <script src="${ballJs}"></script>
 <script src="${gameJs}"></script>
@@ -15,6 +17,8 @@
         <div class="col-lg-12">
             <%--<center>--%>
                 <div id="gamecontainer" class="jumbotron">
+                    <span id="lives">Lives: <span id="livesCount">AAAA</span></span>
+                    <span id="score">Score: <span id="scoreCount">0</span></span>
                     <div id="jsgame">
                         <div id='ready'>
                             READY
@@ -35,7 +39,7 @@
     </div>
     <div class="row">
         <div class="col-md-6 highscores highscores1">
-            <h3>All Time High Scores</h3>
+            <h3>Hall of Fame</h3>
             <table class="table table-striped col-md-6">
                 <thead>
                     <tr>

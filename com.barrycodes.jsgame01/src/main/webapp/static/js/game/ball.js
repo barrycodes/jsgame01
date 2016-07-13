@@ -1,6 +1,10 @@
 
 function setBallDelta() {
-    ballAngle %= 360;
+    if (ballAngle < 0)
+        ballAngle += 360;
+    if (ballAngle > 360)
+        ballAngle %= 360;
+
     var quadrant = -1;
     var angle = ballAngle;
     if (angle >= 0) {
@@ -27,7 +31,7 @@ function setBallDelta() {
         // ... sin angle = opposite / hypotenuse
         // ... cos angle = adjacent / hypotenuse
         // ... tan angle = opposite / adjacent
-        var radians = angle * (Math.PI/180);
+        var radians = angle * radianFactor;
         ballDeltaY = Math.sin(radians) * ballDistancePerFrame;
         ballDeltaX = Math.cos(radians) * ballDistancePerFrame;
     }
@@ -73,6 +77,11 @@ function moveBall() {
     setBallPosition(ballX, ballY);
 }
 
+function initializeBall() {
+    setBallCoords(ballInitialX, ballInitialY);
+    setBallPosition(ballX, ballY);
+}
+
 function startBallMoving() {
     stopBallMoving();
     setBallPosition(ballX, ballY);
@@ -85,23 +94,62 @@ function stopBallMoving() {
 }
 
 function checkCollisions() {
-    var ballLeft = ballX;
-    var ballTop = ballY;
-    var ballRight = ballCenterX + ballRadius;
-    var ballBottom = ballCenterY + ballRadius;
+    var collision = false;
 
-    var angleUpdated = false;
+    var ballRect = new block(ballX, ballY, ballCenterX + ballRadius, ballCenterY + ballRadius);
 
-    angleUpdated = angleUpdated || checkWallCollisions(angleUpdated, ballLeft, ballTop, ballRight, ballBottom);
-    angleUpdated = angleUpdated || checkSliderCollision(angleUpdated, ballLeft, ballTop, ballRight, ballBottom);
+    if (checkWallCollisions(ballRect))
+        collision = true;
+    if (checkSliderCollision(ballRect))
+        collision = true;
+    if (checkBrickCollisions(ballRect))
+        collision = true;
 
-    if (angleUpdated)
+    if (collision)
         setBallDelta();
 }
 
+function nextLevel() {
+    stopBallMoving();
+    $("#ball").css("visibility", "hidden");
+    ++ballDistancePerFrame;
+    sliderWidth -= 10;
+    slider.css("width", sliderWidth);
+    initializeBall();
+    resetAnimation(levelBlocks1);
+}
+
+function checkBrickCollisions(ballRect) {
+    var collision = false;
+
+    for (var i = 0; i < levelBlocks.length; ++i) {
+        var blockRow = levelBlocks[i];
+        for (var j = 0; j < blockRow.length; ++j) {
+            var blockObj = blockRow[j];
+            if (blockObj.exists) {
+                if (checkBlockCollision(ballRect, blockObj, false)) {
+                    collision = true;
+                    score += 10;
+                    showScore();
+                    blockObj.exists = false;
+                    blockObj.element.remove();
+//                    console.log(blockCount);
+                    if (--blockCount == 0) {
+                        score += 100;
+                        showScore();
+                        nextLevel();
+                    }
+                }
+            }
+        }
+    }
+
+    return collision;
+}
+
 function setBallPosition(left, top) {
-    ball.css("left", "" + left + "em");
-    ball.css("top", "" + top + "em");
+    ball.css("left", left);
+    ball.css("top", top);
 }
 
 function setBallCoords(left, top) {
@@ -111,69 +159,108 @@ function setBallCoords(left, top) {
     ballCenterY = ballY + ballRadius;
 }
 
-function block(left, top, right, bottom) {
+function block(left, top, right, bottom, element) {
     this.left = left;
     this.top = top;
     this.right = right;
     this.bottom = bottom;
+    this.element = element;
+    this.exists = true;
 }
 
-function checkSliderCollision(angleUpdated, ballLeft, ballTop, ballRight, ballBottom) {
-    var sliderBlock = new block(sliderPosition, sliderTop - sliderHeight, sliderPosition + sliderWidth, sliderTop);
-    if (ballRight >= sliderBlock.left && ballLeft <= sliderBlock.right && ballBottom >= sliderBlock.top && ballTop <= sliderBlock.bottom) {
+function checkBlockCollision(ballRect, blockRect, allowCornerAngle) {
+    var collision = false;
+    if (ballRect.right >= blockRect.left && ballRect.left <= blockRect.right && ballRect.bottom >= blockRect.top && ballRect.top <= blockRect.bottom) {
+        var rLeft = false;
+        var rTop = false;
+        var rRight = false;
+        var rBottom = false;
         var angle = ballAngle;
-        if (angle > 180 && ballAngle < 360 && ballBottom >= sliderBlock.top && ballBottom < sliderBlock.bottom) {
-
-            //console.log(ballBottom);
-            //console.log(ballTop);
-            //console.log(ballCenterY);
-            //console.log(sliderBlock.top);
-            //logStuff("TOP");
-            ballRicochetBottom();
-            angleUpdated = true;
+        var angleOffset = 0;
+        if (angle > 180 && angle < 360 && ballRect.bottom >= blockRect.top && ballRect.bottom < blockRect.bottom) {
+            if (allowCornerAngle) {
+                var closeToCorner = ballRect.right - blockRect.left;
+                if (closeToCorner < 60)
+                    angleOffset -= (60 - closeToCorner) * 0.5;
+                closeToCorner = blockRect.right - ballRect.left;
+                if (closeToCorner < 60)
+                    angleOffset += (60 - closeToCorner) * 0.5;
+            }
+            rBottom = true;
+            collision = true;
         }
-        if (angle < 180 && ballTop <= sliderBlock.bottom && ballTop > sliderBlock.top) {
-            //logStuff("BOTTOM");
-            ballRicochetTop();
-            angleUpdated = true;
+        if (angle < 180 && ballRect.top <= blockRect.bottom && ballRect.top > blockRect.top) {
+            rTop = true;
+            collision = true;
         }
-        if ((angle < 90 || angle > 270) && ballRight >= sliderBlock.left && ballLeft < sliderBlock.left) {
-            //logStuff("LEFT");
-            ballRicochetRight();
-            angleUpdated = true;
+        if ((angle < 90 || angle > 270) && ballRect.right >= blockRect.left && ballRect.left < blockRect.left) {
+            rRight = true;
+            collision = true;
         }
-        if (angle > 90 && angle < 270 && ballLeft <= sliderBlock.right && ballRight > sliderBlock.right) {
-            //logStuff("RIGHT");
-            ballRicochetLeft();
-            angleUpdated = true;
+        if (angle > 90 && angle < 270 && ballRect.left <= blockRect.right && ballRect.right > blockRect.right) {
+            rLeft = true;
+            collision = true;
         }
+        if (rTop && (rLeft || rRight))
+            angleOffset = 0;
+        ballAngle = angle + angleOffset;
+        if (rLeft) ballRicochetLeft();
+        if (rTop) ballRicochetTop();
+        if (rRight) ballRicochetRight();
+        if (rBottom) ballRicochetBottom();
     }
-    return angleUpdated;
+    return collision;
 }
 
-function checkWallCollisions(angleUpdated, ballLeft, ballTop, ballRight, ballBottom) {
-    if (ballLeft <= leftWall) {
-        ballRicochetLeft();
-        setBallCoords(leftWall + (leftWall - ballLeft), ballTop);
-        angleUpdated = true;
+function checkSliderCollision(ballRect) {
+
+    var sliderRect = new block(sliderX, sliderY - sliderHeight, sliderX + sliderWidth, sliderY);
+
+    return checkBlockCollision(ballRect, sliderRect, true);
+}
+
+function loseTurn() {
+    --lives;
+    stopBallMoving();
+    $("#ball").css("visibility", "hidden");
+    initializeBall();
+    resetAnimation();
+}
+
+function checkWallCollisions(ballRect) {
+    var collision = false;
+    var rLeft = false;
+    var rTop = false;
+    var rRight = false;
+    var rBottom = false;
+    if (ballRect.left <= leftWall) {
+        rLeft = true;
+        setBallCoords(leftWall + (leftWall - ballRect.left), ballRect.top);
+        collision = true;
     }
-    if (ballTop <= topWall) {
+    if (ballRect.top <= topWall) {
         //logStuff("TOPWALL");
-        ballRicochetTop();
-        setBallCoords(ballLeft, topWall + (topWall - ballTop));
-        angleUpdated = true;
+        rTop = true;
+        setBallCoords(ballRect.left, topWall + (topWall - ballRect.top));
+        collision = true;
     }
-    if (ballRight >= rightWall) {
-        ballRicochetRight();
-        setBallCoords(rightWall - (ballRight - rightWall) - ballRadius - ballRadius, ballTop);
-        angleUpdated = true;
+    if (ballRect.right >= rightWall) {
+        rRight = true;
+        setBallCoords(rightWall - (ballRect.right - rightWall) - ballRadius - ballRadius, ballRect.top);
+        collision = true;
     }
-    if (ballBottom >= bottomWall) {
-        ballRicochetBottom();
-        setBallCoords(ballLeft, bottomWall - (ballBottom - bottomWall) - ballRadius - ballRadius);
-        angleUpdated = true;
+    if (ballRect.bottom >= bottomWall) {
+//        rBottom = true;
+//        setBallCoords(ballRect.left, bottomWall - (ballRect.bottom - bottomWall) - ballRadius - ballRadius);
+//        collision = true;
+        loseTurn();
     }
-    return angleUpdated;
+    if (rLeft) ballRicochetLeft();
+    if (rTop) ballRicochetTop();
+    if (rRight) ballRicochetRight();
+    if (rBottom) ballRicochetBottom();
+
+    return collision;
 }
 
 function ballRicochetLeft() {

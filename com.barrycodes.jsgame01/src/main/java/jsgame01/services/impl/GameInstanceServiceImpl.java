@@ -55,7 +55,7 @@ public class GameInstanceServiceImpl implements GameInstanceService {
     }
 
     @Override
-    public Iterable<GameInstance> getTop10ScoresToday() {
+    public Iterable<GameInstance> getTopScoresToday() {
         // today
         Calendar date = new GregorianCalendar();
 // reset hour, minutes, seconds and millis
@@ -64,7 +64,7 @@ public class GameInstanceServiceImpl implements GameInstanceService {
         date.set(Calendar.SECOND, 0);
         date.set(Calendar.MILLISECOND, 0);
 
-        return repo.findTop10ByDateAfterOrderByScoreDesc(date.getTime());
+        return repo.findTop5ByDateAfterOrderByScoreDesc(date.getTime());
 //        return repo.findTop10ByDateAfter(date.getTime());
     }
 }

@@ -16,5 +16,5 @@ public interface GameInstanceRepository extends PagingAndSortingRepository<GameI
 //    public Iterable<GameInstance> findTop2();
 //    public Iterable<GameInstance> find(int score);
 //    public Iterable<GameInstance> findTop2OrderByScore();
-    public Iterable<GameInstance> findTop10ByDateAfterOrderByScoreDesc(Date start);
+    public Iterable<GameInstance> findTop5ByDateAfterOrderByScoreDesc(Date start);
 }

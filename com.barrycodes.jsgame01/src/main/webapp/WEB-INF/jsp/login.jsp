@@ -1,6 +1,20 @@
 <%@include file="includes/header.jsp" %>
 <%@include file="includes/navbar.jsp" %>
 
+<script>
+    $(function() {
+        alert("yep");
+        if ("${gameUserVo.username}"==null) {
+            alert("yep2");
+            $("#inputUsername").val("");
+        }
+        if ("${gameUserVo.password}"==null) {
+            alert("yep3");
+            $("#inputPassword").val("");
+        }
+    });
+</script>
+
 <div class="wrapper container">
     <div id="main-wrapper" class="col-sm-12">
         <form:form modelAttribute="gameUserVo" cssClass="form-horizontal col-sm-5" action="/login" method="post">

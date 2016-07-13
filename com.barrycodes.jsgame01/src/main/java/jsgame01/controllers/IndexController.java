@@ -23,6 +23,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by barrsmit1 on 7/5/2016.
@@ -43,7 +44,7 @@ public class IndexController {
     public String index(Model model) {
 
         Iterable<GameInstance> games1 = gameService.getTop10Scores();
-        Iterable<GameInstance> games2 = gameService.getTop10ScoresToday();
+        Iterable<GameInstance> games2 = gameService.getTopScoresToday();
 
         model.addAttribute("top10Games", games1);
         model.addAttribute("top10GamesToday", games2);
@@ -117,7 +118,10 @@ public class IndexController {
                 }
             }
         }
-        model.addAttribute("gameUserVo", modelObject);
+        if (modelObject != null)
+            model.addAttribute("gameUserVo", modelObject);
+        else
+            result = "redirect:/login";
 
         return result;
 

@@ -1,18 +1,28 @@
 
 function moveSliderLeft() {
-    if (sliderPosition > (minSliderPosition + sliderDistancePerFrame))
-        sliderPosition -= sliderDistancePerFrame;
-    else
-        sliderPosition = minSliderPosition;
-    slider.css('left', "" + sliderPosition + "em");
+    moveSlider(-sliderDistancePerFrame);
 }
 
 function moveSliderRight() {
-    if (sliderPosition < (maxSliderPosition - sliderDistancePerFrame))
-        sliderPosition += sliderDistancePerFrame;
-    else
-        sliderPosition = maxSliderPosition;
-    slider.css('left', "" + sliderPosition + "em");
+    moveSlider(sliderDistancePerFrame);
+}
+
+function initializeSlider() {
+    moveSliderTo(sliderInitialX);
+}
+
+function moveSlider(offset) {
+    sliderX += offset;
+    if (sliderX < minSliderPosition)
+        sliderX = minSliderPosition;
+    else if (sliderX > maxSliderPosition)
+        sliderX = maxSliderPosition;
+    moveSliderTo(sliderX);
+}
+
+function moveSliderTo(x) {
+    sliderX = x;
+    slider.css('left', sliderX);
 }
 
 function startMovingRight() {

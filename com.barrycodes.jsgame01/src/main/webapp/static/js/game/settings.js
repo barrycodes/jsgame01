@@ -1,37 +1,57 @@
-var game;
-var slider;
-var sliderTimer;
 var keyLeft = 37;
 var keyRight = 39;
 var keyEscape = 27;
+
+var radianFactor = Math.PI / 180;
+
 var active = false;
 var movingRight = false;
 var movingLeft = false;
-var sliderPosition = 20.6;
-var sliderWidth = 15;
-var sliderHeight = 1.7;
-var sliderTop = 28;
-var minSliderPosition = 2;
-var maxSliderPosition = 39.2;
-var frameDelay = 10;
-var sliderDistancePerFrame = 0.4;
-var readyDelay = 2000;
-var goDelay = 350;
+
+var game;
+var slider;
 var ball;
-var ballDistancePerFrame = 0.28;
+
+var sliderTimer;
 var ballTimer;
-//var ballX = 19;
-//var ballY = 20;
-var ballAngle = 285;
-var ballDeltaX;
-var ballDeltaY;
-var ballRadius = 1;
-var leftWall = 0;
-var rightWall = 56;
-var vOffset = -1.7;
-var topWall = vOffset;
-var bottomWall = 33 + vOffset;
+var goDelay = 350;
+var readyDelay = 2000;
+var frameDelay = 10;
+
+var leftWall;
+var rightWall;
+var topWall;
+var bottomWall;
+
+var ballX;
+var ballY;
+
 var ballCenterX;
 var ballCenterY;
-var ballX = leftWall;
-var ballY = topWall;
+var ballRadius;
+var ballWidth;
+var ballHeight;
+
+var ballDeltaX;
+var ballDeltaY;
+var ballAngle = 285;
+
+var ballInitialX = 330;
+var ballInitialY = 220;
+var ballInitialAngle = 285;
+var sliderInitialX = 0;
+
+var sliderDistancePerFrame = 8;
+var ballDistancePerFrame = 3;
+
+var sliderX;
+var sliderY;
+var sliderWidth;
+var sliderHeight;
+var minSliderPosition;
+var maxSliderPosition;
+//var ballX = 19;
+//var ballY = 20;
+
+var lives = 3;
+var score = 0;
