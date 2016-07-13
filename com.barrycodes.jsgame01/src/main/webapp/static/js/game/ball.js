@@ -1,9 +1,22 @@
 
-function setBallDelta() {
+function correctShallowAngle() {
+    if (ballAngle < 180 && ballAngle > 175)
+        ballAngle = 175;
+    else if (ballAngle > 0 && ballAngle < 5)
+        ballAngle = 5;
+}
+
+function correctAngleOutOfBounds() {
     if (ballAngle < 0)
         ballAngle += 360;
     if (ballAngle > 360)
         ballAngle %= 360;
+}
+
+function setBallDelta() {
+
+    correctAngleOutOfBounds();
+    correctShallowAngle();
 
     var quadrant = -1;
     var angle = ballAngle;

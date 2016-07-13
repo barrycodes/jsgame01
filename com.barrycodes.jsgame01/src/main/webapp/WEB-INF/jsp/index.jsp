@@ -41,7 +41,7 @@
         </div>
     </div>
     <div class="row highscores">
-        <div class="col-md-6">
+        <div class="col-md-6 highscores1">
             <h3>Hall of Fame</h3>
             <table class="table table-striped">
                 <thead>
@@ -66,7 +66,7 @@
                 </tbody>
             </table>
         </div>
-        <div class="col-md-6 highscores highscores2">
+        <div class="col-md-6 highscores2">
             <h3>Today's High Scores</h3>
             <table class="table table-striped">
                 <thead>

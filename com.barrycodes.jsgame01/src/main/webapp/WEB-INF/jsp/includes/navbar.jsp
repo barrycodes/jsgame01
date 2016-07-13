@@ -13,8 +13,8 @@
         <div class="collapse navbar-collapse" id="navbar-collapse-1">
             <ul class="nav navbar-nav">
                 <%--PAGE LINKS--%>
-                <li><a href="/about">About</a></li>
-                <li><a href="/admin">Admin</a></li>
+                <%--<li><a href="/about">About</a></li>--%>
+                <%--<li><a href="/admin">Admin</a></li>--%>
             </ul>
             <%@include file="user.jsp"%>
         </div>
