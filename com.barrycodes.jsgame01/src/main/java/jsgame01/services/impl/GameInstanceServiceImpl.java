@@ -4,9 +4,12 @@ import jsgame01.domain.GameInstance;
 import jsgame01.repositories.GameInstanceRepository;
 import jsgame01.services.GameInstanceService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
+import java.util.*;
 
 /**
 * Created by barrsmit1 on 7/5/2016.
@@ -41,4 +44,28 @@ public class GameInstanceServiceImpl implements GameInstanceService {
     public void deleteAllGameInstances() {
         repo.deleteAll();
     }
+
+    @Override
+    public Iterable<GameInstance> getTop10Scores() {
+        Page<GameInstance> games = repo.findAll(new PageRequest(0, 10, Sort.Direction.DESC, "score"));
+        List<GameInstance> results = new ArrayList<>();
+        for (GameInstance g : games)
+            results.add(g);
+        return results;
+    }
+
+    @Override
+    public Iterable<GameInstance> getTopScoresToday() {
+        // today
+        Calendar date = new GregorianCalendar();
+// reset hour, minutes, seconds and millis
+        date.set(Calendar.HOUR_OF_DAY, 0);
+        date.set(Calendar.MINUTE, 0);
+        date.set(Calendar.SECOND, 0);
+        date.set(Calendar.MILLISECOND, 0);
+
+        return repo.findTop5ByDateAfterOrderByScoreDesc(date.getTime());
+//        return repo.findTop10ByDateAfter(date.getTime());
+    }
 }
+

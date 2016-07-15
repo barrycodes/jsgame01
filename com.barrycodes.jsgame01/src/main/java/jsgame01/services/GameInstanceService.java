@@ -19,4 +19,8 @@ public interface GameInstanceService {
 
     public void deleteAllGameInstances();
 
+    public Iterable<GameInstance> getTop10Scores();
+
+    public Iterable<GameInstance> getTopScoresToday();
+
 }

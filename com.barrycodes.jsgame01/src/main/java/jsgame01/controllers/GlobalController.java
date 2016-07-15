@@ -21,6 +21,17 @@ public final class GlobalController {
     @Autowired
     GameUserService userService;
 
+    public static GameUser getLoggedInUser(GameUserService userService, HttpSession session) {
+        GameUser result = null;
+
+        String userGuid = (String)session.getAttribute("loggedInUser");
+
+        if (!StringHelper.isNullOrEmpty(userGuid)) {
+            result = userService.getUserByGuid(userGuid);
+        }
+        return result;
+    }
+
     @ModelAttribute
     public void addAttributes(
             Model model,
@@ -34,14 +45,6 @@ public final class GlobalController {
 //            name = auth.getName(); //get logged in username
 //        }
 
-        GameUser result = null;
-
-        String userGuid = (String)session.getAttribute("loggedInUser");
-
-        if (!StringHelper.isNullOrEmpty(userGuid)) {
-            result = userService.getUserByGuid(userGuid);
-        }
-
-        model.addAttribute("gameUser", result);
+        model.addAttribute("gameUser", getLoggedInUser(userService, session));
     }
 }

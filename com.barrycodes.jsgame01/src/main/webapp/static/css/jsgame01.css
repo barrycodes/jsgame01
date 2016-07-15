@@ -10,3 +10,49 @@ div.footer footer {
     margin-top: 0.8em;
     color: black;
 }
+
+.usernameCheck {
+    font-size: 1.3em;
+    margin-top: 0.45em;
+}
+
+.usernameGood {
+    color: green;
+    display: none;
+    vertical-align: middle;
+}
+
+.usernameBad {
+    color: red;
+    display: none;
+    vertical-align: middle;
+}
+
+.passwordGood {
+    color: green;
+    display: none;
+    vertical-align: middle;
+}
+
+.passwordBad {
+    color: red;
+    display: none;
+    vertical-align: middle;
+}
+
+.loginSubmit {
+
+}
+
+.highscores {
+    margin-top: 35em;
+}
+
+#begin {
+    font-size: 0.8em;
+    display: inline;
+    text-align: center;
+}
+.nav, .navbar-inverse {
+    /*font-size:3em;*/
+}

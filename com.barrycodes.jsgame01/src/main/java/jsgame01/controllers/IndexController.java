@@ -1,18 +1,29 @@
 package jsgame01.controllers;
 
+import com.google.gson.Gson;
+import jsgame01.common.LogHelper;
 import jsgame01.common.PasswordStorage;
+import jsgame01.domain.GameInstance;
 import jsgame01.domain.GameUser;
 import jsgame01.domain.vo.GameUserVo;
+import jsgame01.services.GameInstanceService;
+import jsgame01.services.GameUserRoleService;
 import jsgame01.services.GameUserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageImpl;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
+import java.util.Date;
 
 /**
  * Created by barrsmit1 on 7/5/2016.
@@ -23,8 +34,21 @@ public class IndexController {
     @Autowired
     private GameUserService userService;
 
+    @Autowired
+    private GameUserRoleService roleService;
+
+    @Autowired
+    private GameInstanceService gameService;
+
     @RequestMapping(value = "/")
-    public String index() {
+    public String index(Model model) {
+
+        Iterable<GameInstance> games1 = gameService.getTop10Scores();
+        Iterable<GameInstance> games2 = gameService.getTopScoresToday();
+
+        model.addAttribute("top10Games", games1);
+        model.addAttribute("top10GamesToday", games2);
+
         return "index";
     }
 
@@ -46,6 +70,26 @@ public class IndexController {
         return "login";
     }
 
+    @RequestMapping(value = "/signup", method = RequestMethod.GET)
+    public String signupGet(Model model) {
+
+        model.addAttribute("gameUserVo", new GameUserVo());
+
+        return "signup";
+    }
+
+    @RequestMapping(value = "/checkusername", method = RequestMethod.GET)
+    public void checkUsername(@RequestParam String username, HttpServletResponse response) {
+        GameUser user = userService.getUserByName(username);
+        Boolean result = (user == null);
+
+        try {
+            response.getWriter().write(new Gson().toJson(result));
+        } catch (IOException ex) {
+            LogHelper.getLogger().error(ex);
+        }
+    }
+
     @RequestMapping(value = "/logout")
     public String logout(HttpSession session) {
         session.invalidate();
@@ -59,7 +103,7 @@ public class IndexController {
 
         Object modelObject = null;
 
-        modelObject = gameUserVo;
+        boolean success = false;
 
         if (gameUserVo != null) {
             GameUser foundUser = userService.getUserByName(gameUserVo.getUsername());
@@ -68,16 +112,47 @@ public class IndexController {
                 if (correctPassword != null) {
                     if (PasswordStorage.verifyPassword(gameUserVo.getPassword(), correctPassword)) {
                         setLoggedInCookie(foundUser, session);
+                        modelObject = gameUserVo;
                         result = "redirect:/";
-                        modelObject = foundUser;
+                        success = true;
                     }
                 }
+            }
+        }
+        if (success)
+            model.addAttribute("gameUserVo", modelObject);
+        else {
+            model.addAttribute("gameUserVo", new GameUserVo());
+            model.addAttribute("errorAlert", "error");
+            result = "login";
+        }
+        return result;
+
+    }
+
+    @RequestMapping(value = "/signup", method = RequestMethod.POST)
+    public String signupPost(GameUserVo gameUserVo, Model model, HttpSession session) throws PasswordStorage.CannotPerformOperationException, PasswordStorage.InvalidHashException {
+
+        String result = "signup";
+
+        Object modelObject = null;
+
+        modelObject = gameUserVo;
+
+        if (gameUserVo != null) {
+            GameUser foundUser = userService.getUserByName(gameUserVo.getUsername());
+            if (foundUser == null) {
+                foundUser = new GameUser(gameUserVo.getUsername(), PasswordStorage.createHash(gameUserVo.getPassword()));
+                foundUser.getRoles().add(roleService.getRoleByName("player"));
+                userService.saveUser(foundUser);
+                setLoggedInCookie(foundUser, session);
+                result = "redirect:/";
+                modelObject = foundUser;
             }
         }
         model.addAttribute("gameUserVo", modelObject);
 
         return result;
-
     }
 
     private void setLoggedInCookie(GameUser user, HttpSession session) {

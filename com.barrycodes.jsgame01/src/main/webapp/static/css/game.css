@@ -1,0 +1,69 @@
+#gamecontainer {
+    /*margin-top: 28px;*/
+    height: 480px;
+    width: 815px;
+    position: absolute;
+    /*display: flex;*/
+    align-content: center;
+    text-align: center;
+    margin-bottom:70px;
+    padding: 1em;
+    padding-bottom: 4em;
+}
+#jsgame {
+    margin-top:1.2em;
+    background-color: #113;
+    position: relative;
+    /*top:0px;*/
+    /*left:0px;*/
+    width:100%;
+    height:100%;
+    /*margin-bottom:10em;*/
+}
+#slider {
+    background-color: #11A;
+    width: 175px;
+    height: 22px;
+    position: relative;
+    /*left: 20.6em;*/
+    left: 288px;
+    /*bottom: -28em;*/
+    top: 370px;
+    border-radius: 7px;
+
+    /*margin-top:10em;*/
+    /*margin-left:5em;*/
+}
+#ready, #go {
+    color:yellow;
+    width: 100%;
+    font-size: 7em;
+    top:1.7em;
+    text-align: center;
+    position: absolute;
+}
+#go {
+    visibility: hidden;
+}
+#ball {
+    background-color: #999;
+    position: relative;
+    /*left: 19em;*/
+    /*top: 20em;*/
+    left: 0px;
+    top: -22px;
+    width:28px;
+    height:28px;
+    border-radius: 14px;
+    display: none;
+}
+#lives {
+    text-align:left;
+    display: inline;
+    float:left;
+}
+#score {
+    text-align: right;
+    display: inline;
+    float: right;
+}
