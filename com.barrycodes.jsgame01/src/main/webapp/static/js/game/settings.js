@@ -42,7 +42,10 @@ var ballInitialAngle = 285;
 var sliderInitialX = 0;
 
 var sliderDistancePerFrame = 8;
-var ballDistancePerFrame = 3.7;
+var ballDistancePerFrame = 3.9;
+var sliderDistancePerFrameLevelDelta = 0.55;
+var ballDistancePerFrameLevelDelta = 0.55;
+var sliderWidthLevelDelta = -15;
 
 var sliderX;
 var sliderY;

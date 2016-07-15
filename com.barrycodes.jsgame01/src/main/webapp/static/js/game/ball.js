@@ -125,9 +125,9 @@ function checkCollisions() {
 function nextLevel() {
     stopBallMoving();
     $("#ball").css("visibility", "hidden");
-    ballDistancePerFrame += 0.7;
-    sliderDistancePerFrame += 0.7;
-    sliderWidth -= 15;
+    ballDistancePerFrame += ballDistancePerFrameLevelDelta;
+    sliderDistancePerFrame += sliderDistancePerFrameLevelDelta;
+    sliderWidth += sliderWidthLevelDelta;
     slider.css("width", sliderWidth);
     ++level;
     initializeBall();
