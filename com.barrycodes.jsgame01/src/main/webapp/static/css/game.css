@@ -67,3 +67,6 @@
     display: inline;
     float: right;
 }
+div.container {
+    margin-bottom: 4em;
+}
